@@ -63,7 +63,7 @@ const struct gpio_event_direct_entry incrediblec_keypad_nav_map_x1[] = {
 
 static struct gpio_event_input_info incrediblec_keypad_nav_info = {
 	.info.func = gpio_event_input_func,
-	.info.oj_btn = true,
+	//.info.oj_btn = true,
 	.flags = GPIOEDF_PRINT_KEYS,
 	.type = EV_KEY,
 	.keymap = incrediblec_keypad_nav_map_x1,

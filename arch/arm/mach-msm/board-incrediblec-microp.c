@@ -164,7 +164,7 @@ static int capella_cm3602_enable(struct capella_cm3602_data *data)
 	input_report_abs(data->input_dev, ABS_DISTANCE, -1);
 	input_sync(data->input_dev);
 
-	rc = data->pdata->power(PS_PWR_ON, 1);
+//	rc = data->pdata->power(PS_PWR_ON, 1);
 	if (rc < 0)
 		return -EIO;
 
@@ -204,7 +204,7 @@ static int capella_cm3602_disable(struct capella_cm3602_data *data)
 		return -EIO;
 	}
 
-	rc = data->pdata->power(PS_PWR_ON, 0);
+//	rc = data->pdata->power(PS_PWR_ON, 0);
 	if (rc < 0)
 		return -EIO;
 

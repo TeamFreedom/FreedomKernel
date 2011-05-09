@@ -47,7 +47,7 @@
 #include <mach/msm_serial_debugger.h>
 #include <mach/system.h>
 #include <linux/spi/spi.h>
-#include <linux/curcial_oj.h>
+//#include <linux/curcial_oj.h>
 #include "board-incrediblec.h"
 #include "devices.h"
 #include "proc_comm.h"
@@ -239,11 +239,11 @@ static int capella_cm3602_power(int pwr_device, uint8_t enable)
 	return ret;
 }
 
-static struct capella_cm3602_platform_data capella_cm3602_pdata = {
-	.power = capella_cm3602_power,
-	.p_en = INCREDIBLEC_GPIO_PROXIMITY_EN_N,
-	.p_out = MSM_uP_TO_INT(11),
-};
+//static struct capella_cm3602_platform_data capella_cm3602_pdata = {
+///	.power = capella_cm3602_power,
+	//.p_en = INCREDIBLEC_GPIO_PROXIMITY_EN_N,
+	//.p_out = MSM_uP_TO_INT(11),
+//};
 /* End Proximity Sensor (Capella_CM3602)*/
 
 static struct htc_headset_microp_platform_data htc_headset_microp_data = {
@@ -278,7 +278,7 @@ static struct platform_device microp_devices[] = {
 		.name = "incrediblec_proximity",
 		.id = -1,
 		.dev = {
-			.platform_data = &capella_cm3602_pdata,
+			//.platform_data = &capella_cm3602_pdata,
 		},
 	},
 	{
@@ -1025,8 +1025,8 @@ static void curcial_oj_adjust_xy(uint8_t *data, int16_t *mSumDeltaX, int16_t *mS
 	*mSumDeltaX += -((int16_t)deltaX);
 	*mSumDeltaY += -((int16_t)deltaY);
 }
-static struct curcial_oj_platform_data incrediblec_oj_data = {
-	.oj_poweron	= curcial_oj_poweron,
+//static struct curcial_oj_platform_data incrediblec_oj_data = {
+	/*.oj_poweron	= curcial_oj_poweron,
 	.oj_shutdown	= curcial_oj_shutdown,
 	.oj_adjust_xy = curcial_oj_adjust_xy,
 	.microp_version	= INCREDIBLEC_MICROP_VER,
@@ -1050,15 +1050,15 @@ static struct curcial_oj_platform_data incrediblec_oj_data = {
 	.pxsum_tbl = {0, 0, 40, 50, 60, 70},
 	.degree = 6,
 	.irq = MSM_uP_TO_INT(12),
-};
+};*/
 
-static struct platform_device incrediblec_oj = {
-	.name = CURCIAL_OJ_NAME,
-	.id = -1,
-	.dev = {
-		.platform_data	= &incrediblec_oj_data,
-	}
-};
+//static struct platform_device incrediblec_oj = {
+	//.name = CURCIAL_OJ_NAME,
+//	.id = -1,
+//	.dev = {
+//		.platform_data	= &incrediblec_oj_data,
+//	}
+//};
 
 static struct msm_serial_hs_platform_data msm_uart_dm1_pdata = {
         .rx_wakeup_irq = -1,
@@ -1114,7 +1114,7 @@ static struct platform_device *devices[] __initdata = {
 #if defined(CONFIG_SPI_QSD)
 	&msm_device_spi,
 #endif
-	&incrediblec_oj,
+	//&incrediblec_oj,
 };
 
 static uint32_t bt_gpio_table_rev_CX[] = {
