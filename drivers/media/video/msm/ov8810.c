@@ -2061,22 +2061,18 @@ static int ov8810_sensor_open_init(struct msm_camera_sensor_info *data)
 	msleep(20);
 
 	/*PWD and RST config*/
-<<<<<<< HEAD
-	pr_info("[CAM]%s, GPIO(%d) sensor_pwd 0\n", __func__, data->sensor_pwd);
-=======
+
 	pr_info("%s, GPIO(%d) sensor_pwd 0\n", __func__, data->sensor_pwd);
->>>>>>> b16d297... Fix Camera
+
 	rc = gpio_request(data->sensor_pwd, "ov8810");
 	if (!rc)
 		gpio_direction_output(data->sensor_pwd, 0);
 	else
 		pr_err("[CAM]GPIO (%d) request faile\n", data->sensor_pwd);
 	gpio_free(data->sensor_pwd);
-<<<<<<< HEAD
-	msleep(5);
-=======
+
 	mdelay(5);
->>>>>>> b16d297... Fix Camera
+
 
 	rc = gpio_request(data->sensor_reset, "ov8810");
 	if (!rc)
@@ -2084,10 +2080,7 @@ static int ov8810_sensor_open_init(struct msm_camera_sensor_info *data)
 	else
 		pr_err("[CAM]GPIO (%d) request faile\n", data->sensor_reset);
 	gpio_free(data->sensor_reset);
-<<<<<<< HEAD
-	msleep(1);
-=======
->>>>>>> b16d297... Fix Camera
+
 
 	/*read sensor id*/
 	rc = ov8810_probe_read_id(data);
@@ -2097,11 +2090,9 @@ static int ov8810_sensor_open_init(struct msm_camera_sensor_info *data)
 	pr_info("[CAM]%s, initialize_ov8810_registers: %d\n", __func__, __LINE__);
 	if (rc < 0)
 		goto init_fail;
-<<<<<<< HEAD
-#ifdef CONFIG_ARCH_QSD8X50
-=======
+
 	#if 0 /*move to probe up sensor*/
->>>>>>> b16d297... Fix Camera
+
       /* Initialize Sensor registers */
 	rc = initialize_ov8810_registers();
 	if (rc < 0)
@@ -2122,11 +2113,9 @@ static int ov8810_sensor_open_init(struct msm_camera_sensor_info *data)
 		}
 		}
 	else {
-<<<<<<< HEAD
-		pr_err("[CAM]vreg_af_actuator vreg_enable failed!\n");
-=======
+
 		pr_err("vreg_af_actuator vreg_enable failed!\n");
->>>>>>> b16d297... Fix Camera
+
 		goto init_fail;	
 	}
 
@@ -2225,7 +2214,7 @@ static int ov8810_probe_init_done(const struct msm_camera_sensor_info *data)
 		pr_err("[CAM]GPIO (%d) request faile\n", data->sensor_pwd);
 	gpio_free(data->sensor_pwd);
 	mdelay(1);
-<<<<<<< HEAD
+
 #ifdef CONFIG_ARCH_QSD8X50
 	rc = gpio_request(data->sensor_reset, "ov8810");
 	if (!rc)
@@ -2234,8 +2223,7 @@ static int ov8810_probe_init_done(const struct msm_camera_sensor_info *data)
 		pr_err("GPIO (%d) request faile\n", data->sensor_reset);
 	gpio_free(data->sensor_reset);
 #endif
-=======
->>>>>>> b16d297... Fix Camera
+
 	return 0;
 }
 
@@ -2633,38 +2621,21 @@ static int ov8810_sensor_release(void)
 
 	down(&ov8810_sem);
 	msleep(35);
-<<<<<<< HEAD
 
-	if (ov8810_ctrl) {
-		rc = gpio_request(ov8810_ctrl->sensordata->sensor_pwd, "ov8810");
-		if (!rc)
-			gpio_direction_output(ov8810_ctrl->sensordata->sensor_pwd, 1);
-		else
-			pr_err("[CAM]GPIO (%d) request faile\n", ov8810_ctrl->sensordata->sensor_pwd);
-		gpio_free(ov8810_ctrl->sensordata->sensor_pwd);
-#ifdef CONFIG_ARCH_QSD8X50
-	/*Pull low RST*/
-	gpio_request(ov8810_ctrl->sensordata->sensor_reset, "ov8810");
-	gpio_direction_output(ov8810_ctrl->sensordata->sensor_reset, 0);
-	gpio_free(ov8810_ctrl->sensordata->sensor_reset);
-#endif
-	}
-=======
+
 	gpio_request(ov8810_ctrl->sensordata->sensor_pwd, "ov8810");
 	gpio_direction_output(ov8810_ctrl->sensordata->sensor_pwd, 1);
 	gpio_free(ov8810_ctrl->sensordata->sensor_pwd);
->>>>>>> b16d297... Fix Camera
+
 
 	pr_info("[CAM]vreg_af_actuator vreg_disable\n");
 	vreg_disable(vreg_af_actuator);
 
 	msleep(20);
 
-<<<<<<< HEAD
-	pr_info("[CAM]%s, %d\n", __func__, __LINE__);
-=======
+
 	pr_info("%s, %d\n", __func__, __LINE__);
->>>>>>> b16d297... Fix Camera
+
 
 	msm_camio_probe_off(ov8810_pdev);
 	if (ov8810_ctrl) {
@@ -2728,12 +2699,7 @@ static int ov8810_sensor_probe(struct msm_camera_sensor_info *info,
 	if (rc < 0)
 		return rc;
 
-<<<<<<< HEAD
-	if (info->camera_main_set_probe != NULL)
-		info->camera_main_set_probe(true);
 
-=======
->>>>>>> b16d297... Fix Camera
 	init_suspend();
 	s->s_init = ov8810_sensor_open_init;
 	s->s_release = ov8810_sensor_release;
@@ -2796,42 +2762,14 @@ static int ov8810_vreg_disable(struct platform_device *pdev)
 
 static int __ov8810_probe(struct platform_device *pdev)
 {
-<<<<<<< HEAD
-	struct msm_camera_sensor_info *sdata = pdev->dev.platform_data;
-	printk("[CAM]__ov8810_probe\n");
-	ov8810_pdev = pdev;
 
-	if (sdata->camera_main_get_probe != NULL) {
-		if (sdata->camera_main_get_probe()) {
-			pr_info("[CAM]__ov8810_probe camera main get probed already.\n");
-			return 0;
-		}
-	}
-
-#ifndef CONFIG_ARCH_QSD8X50
-    {
-    int rc;
-	rc = gpio_request(sdata->sensor_pwd, "ov8810");
-	if (!rc)
-		gpio_direction_output(sdata->sensor_pwd, 1);
-	else
-		pr_err("[CAM]GPIO (%d) request faile\n", sdata->sensor_pwd);
-	gpio_free(sdata->sensor_pwd);
-	udelay(200);
-
-	rc = ov8810_vreg_enable(pdev);
-	if (rc < 0)
-		pr_err("[CAM]__ov8810_probe fail sensor power on error\n");
-	}
-#endif
-=======
 	int rc;
 	printk("__ov8810_probe\n");
 	ov8810_pdev = pdev;
-	rc = ov8810_vreg_enable(pdev);
+	//rc = ov8810_vreg_enable(pdev);
 	if (rc < 0)
 		pr_err("__ov8810_probe fail sensor power on error\n");
->>>>>>> b16d297... Fix Camera
+
 
 	return msm_camera_drv_start(pdev, ov8810_sensor_probe);
 }
